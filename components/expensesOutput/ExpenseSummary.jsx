@@ -4,10 +4,11 @@ import {GlobalStyles} from "../../constants/styles";
 
 const ExpenseSummary = ({period, expenses}) => {
     const total = expenses.reduce((acc, expense) => acc + expense.amount, 0);
+
     return (
         <View style={styles.container}>
             <Text style={styles.textStyle}>{period}</Text>
-            <Text style={styles.textStyle}>{total.toFixed(2)} XAF</Text>
+            <Text style={styles.textStyle}>{total?.toFixed(2)} XAF</Text>
         </View>
     );
 };
