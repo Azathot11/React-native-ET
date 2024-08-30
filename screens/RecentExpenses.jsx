@@ -1,15 +1,21 @@
 import  {useContext} from 'react';
 import { View,StyleSheet} from "react-native";
+
 import ExpensesOutput from "../components/expensesOutput/ExpensesOutput";
 import {GlobalStyles} from "../constants/styles";
 import {ExpenseContext} from "../context/expense-context";
+import LoadingOverlay from "../components/manageExpense/LoadingOverlay";
 
 const RecentExpenses = () => {
-    const {expenses} = useContext(ExpenseContext);
+    const {expenses,httpState} = useContext(ExpenseContext);
+    console.log(httpState.loading);
     return (
+        <>
+            {httpState.loading && <LoadingOverlay/>}
         <View style={styles.screen}>
             <ExpensesOutput expenses={expenses}/>
         </View>
+        </>
     );
 };
 

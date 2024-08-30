@@ -4,9 +4,10 @@ import { View, StyleSheet } from "react-native";
 import {ExpenseContext} from "../../context/expense-context";
 import Input from "./Input";
 import Button from "../ui/Button";
+import ErrorOverLay from "./ErrorOverLay";
 
 const ExpenseForm = ({ isEditing ,navigation,expenseId}) => {
-    const {addExpense,updateExpense,expenses} = useContext(ExpenseContext);
+    const {addExpense,updateExpense,expenses,httpState} = useContext(ExpenseContext);
     const [formValues, setFormValues] = useState({
         amount: "",
         date: "",
@@ -44,7 +45,6 @@ const ExpenseForm = ({ isEditing ,navigation,expenseId}) => {
             updateExpense(expenseId,
                 {
                     ...formValues,
-                    id: expenseId,
                     date: new Date(formValues.date),
                     amount: parseFloat(formValues.amount),
                 }
@@ -52,7 +52,6 @@ const ExpenseForm = ({ isEditing ,navigation,expenseId}) => {
         } else {
             addExpense({
                 ...formValues,
-                id: Math.random().toString(),
                 amount: parseFloat(formValues.amount),
                 date: new Date(formValues.date)
             });
@@ -60,7 +59,10 @@ const ExpenseForm = ({ isEditing ,navigation,expenseId}) => {
         navigation.goBack()
     }
 
+
     return (
+        <>
+            {/*{httpState.error &&<ErrorOverLay errorMessage={httpState.error}/>}*/}
         <View>
             <Input
                 label="Amount"
@@ -95,6 +97,7 @@ const ExpenseForm = ({ isEditing ,navigation,expenseId}) => {
                 <Button style={styles.button} onPress={confirmHandler}>{isEditing ?"Update":"Add"}</Button>
             </View>
         </View>
+        </>
     );
 };
 
